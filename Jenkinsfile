@@ -26,7 +26,7 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    buildImage()
+                    buildImage('keshawndev/demo-app:jma-4.0')
                 }
             }
         }
