@@ -1,6 +1,10 @@
 #!/usr/bin/env groovy
 
-@Library('jenkins-shared-library@master')
+library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
+        [$class: 'GitSCMSource',
+        remote: 'https://github.com/keshawndev/jenkins-shared-library.git',
+        credentialsId: 'github-credentials'])
+
 def gv
 
 pipeline {   
@@ -26,7 +30,7 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    buildImage('keshawndev/demo-app:jma-4.0')
+                    buildImage()
                 }
             }
         }
