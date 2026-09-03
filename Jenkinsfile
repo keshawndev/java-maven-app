@@ -20,9 +20,10 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    def dockerCmd = "docker run -p 3080:3080 -d kbarbary211/react-nodejs-example:latest"
+                    def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
                     sshagent(['ec2-server-key']){
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@18.233.157.110 ${dockerCmd}"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ec2-user@18.233.157.110:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@18.233.157.110 ${dockerComposeCmd}"
                     }
                 }
             }
